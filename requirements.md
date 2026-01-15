@@ -36,7 +36,7 @@ There will a second aggregated database that holds anonymised user scores for an
 
 This is going to be a FastAPI app that serves as the backend for the Umatter application. It will handle user authentication, session management, and communication with the Ollama models.
 
-It will also send the session score to the 
+It will also send the session score and time to the central database in an anonymised way.
 
 ## Interacting with the front end
 
