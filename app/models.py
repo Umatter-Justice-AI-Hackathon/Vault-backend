@@ -5,8 +5,17 @@ Defines the schema for users, sessions, and analytics data.
 """
 
 from datetime import datetime
-from typing import Optional
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Text, Boolean
+
+from sqlalchemy import (
+    Boolean,
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+)
 from sqlalchemy.orm import relationship
 
 from app.database import Base
@@ -27,8 +36,12 @@ class User(Base):
     is_active = Column(Boolean, default=True, nullable=False)
 
     # Relationships
-    sessions = relationship("Session", back_populates="user", cascade="all, delete-orphan")
-    analytics = relationship("UserAnalytics", back_populates="user", cascade="all, delete-orphan")
+    sessions = relationship(
+        "Session", back_populates="user", cascade="all, delete-orphan"
+    )
+    analytics = relationship(
+        "UserAnalytics", back_populates="user", cascade="all, delete-orphan"
+    )
 
     def __repr__(self) -> str:
         return f"<User(id={self.id}, email={self.email}, provider={self.provider})>"
@@ -46,10 +59,12 @@ class Session(Base):
     wellbeing_score = Column(Float, nullable=True)  # 0-10 scale
     session_summary = Column(Text, nullable=True)
     action_plan = Column(Text, nullable=True)  # JSON stored as text
-    
+
     # Relationships
     user = relationship("User", back_populates="sessions")
-    messages = relationship("Message", back_populates="session", cascade="all, delete-orphan")
+    messages = relationship(
+        "Message", back_populates="session", cascade="all, delete-orphan"
+    )
 
     def __repr__(self) -> str:
         return f"<Session(id={self.id}, user_id={self.user_id}, score={self.wellbeing_score})>"
@@ -65,18 +80,20 @@ class Message(Base):
     role = Column(String, nullable=False)  # user, assistant, system
     content = Column(Text, nullable=False)
     timestamp = Column(DateTime, default=datetime.utcnow, nullable=False)
-    
+
     # Relationships
     session = relationship("Session", back_populates="messages")
 
     def __repr__(self) -> str:
-        return f"<Message(id={self.id}, role={self.role}, session_id={self.session_id})>"
+        return (
+            f"<Message(id={self.id}, role={self.role}, session_id={self.session_id})>"
+        )
 
 
 class UserAnalytics(Base):
     """
     Anonymized aggregated user wellbeing data for analytics.
-    
+
     This stores anonymized data that can be used for trends and insights
     without revealing personal information.
     """
@@ -89,11 +106,11 @@ class UserAnalytics(Base):
     average_wellbeing_score = Column(Float, nullable=True)
     session_count = Column(Integer, default=0, nullable=False)
     total_messages = Column(Integer, default=0, nullable=False)
-    
+
     # Anonymized demographic info (optional, added later if needed)
     # industry = Column(String, nullable=True)
     # team_size = Column(String, nullable=True)
-    
+
     # Relationships
     user = relationship("User", back_populates="analytics")
 

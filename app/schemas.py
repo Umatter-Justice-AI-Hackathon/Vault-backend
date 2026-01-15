@@ -5,28 +5,31 @@ These schemas define the structure of data sent to and from the API.
 """
 
 from datetime import datetime
-from typing import Optional, List
-from pydantic import BaseModel, EmailStr, Field
 
+from pydantic import BaseModel, EmailStr, Field
 
 # ============================================================================
 # User Schemas
 # ============================================================================
 
+
 class UserBase(BaseModel):
     """Base user information."""
+
     email: EmailStr
-    full_name: Optional[str] = None
+    full_name: str | None = None
 
 
 class UserCreate(UserBase):
     """Schema for creating a new user."""
+
     provider: str
     provider_user_id: str
 
 
 class UserResponse(UserBase):
     """Schema for user responses."""
+
     id: int
     provider: str
     created_at: datetime
@@ -41,20 +44,23 @@ class UserResponse(UserBase):
 # Session Schemas
 # ============================================================================
 
+
 class SessionCreate(BaseModel):
     """Schema for starting a new session."""
+
     pass  # Sessions are created automatically when user starts chatting
 
 
 class SessionResponse(BaseModel):
     """Schema for session responses."""
+
     id: int
     user_id: int
     started_at: datetime
-    ended_at: Optional[datetime] = None
-    wellbeing_score: Optional[float] = None
-    session_summary: Optional[str] = None
-    action_plan: Optional[str] = None
+    ended_at: datetime | None = None
+    wellbeing_score: float | None = None
+    session_summary: str | None = None
+    action_plan: str | None = None
 
     class Config:
         from_attributes = True
@@ -62,22 +68,26 @@ class SessionResponse(BaseModel):
 
 class SessionUpdate(BaseModel):
     """Schema for updating session information."""
-    wellbeing_score: Optional[float] = None
-    session_summary: Optional[str] = None
-    action_plan: Optional[str] = None
+
+    wellbeing_score: float | None = None
+    session_summary: str | None = None
+    action_plan: str | None = None
 
 
 # ============================================================================
 # Message Schemas
 # ============================================================================
 
+
 class MessageCreate(BaseModel):
     """Schema for creating a new message."""
+
     content: str = Field(..., min_length=1, max_length=10000)
 
 
 class MessageResponse(BaseModel):
     """Schema for message responses."""
+
     id: int
     session_id: int
     role: str
@@ -92,29 +102,34 @@ class MessageResponse(BaseModel):
 # Chat Schemas
 # ============================================================================
 
+
 class ChatRequest(BaseModel):
     """Schema for chat requests."""
+
     message: str = Field(..., min_length=1, max_length=10000)
-    session_id: Optional[int] = None  # If None, create new session
+    session_id: int | None = None  # If None, create new session
 
 
 class ChatResponse(BaseModel):
     """Schema for chat responses."""
+
     session_id: int
     message: str
-    wellbeing_score: Optional[float] = None
+    wellbeing_score: float | None = None
     requires_intervention: bool = False
-    intervention_type: Optional[str] = None  # breathing, grounding, etc.
+    intervention_type: str | None = None  # breathing, grounding, etc.
 
 
 # ============================================================================
 # Analytics Schemas
 # ============================================================================
 
+
 class AnalyticsResponse(BaseModel):
     """Schema for user analytics data."""
+
     date: datetime
-    average_wellbeing_score: Optional[float] = None
+    average_wellbeing_score: float | None = None
     session_count: int
     total_messages: int
 
@@ -124,17 +139,20 @@ class AnalyticsResponse(BaseModel):
 
 class WellbeingTrendResponse(BaseModel):
     """Schema for wellbeing trend data."""
-    data_points: List[AnalyticsResponse]
+
+    data_points: list[AnalyticsResponse]
     trend: str  # improving, declining, stable
-    recommendation: Optional[str] = None
+    recommendation: str | None = None
 
 
 # ============================================================================
 # Action Plan Schemas
 # ============================================================================
 
+
 class ActionItem(BaseModel):
     """Individual action item in an action plan."""
+
     title: str
     description: str
     priority: str  # high, medium, low
@@ -143,9 +161,10 @@ class ActionItem(BaseModel):
 
 class ActionPlanResponse(BaseModel):
     """Schema for action plan responses."""
+
     session_id: int
     generated_at: datetime
-    actions: List[ActionItem]
+    actions: list[ActionItem]
     summary: str
 
 
@@ -153,13 +172,16 @@ class ActionPlanResponse(BaseModel):
 # Authentication Schemas
 # ============================================================================
 
+
 class Token(BaseModel):
     """Schema for JWT token response."""
+
     access_token: str
     token_type: str = "bearer"
 
 
 class TokenData(BaseModel):
     """Schema for decoded token data."""
-    user_id: Optional[int] = None
-    email: Optional[str] = None
+
+    user_id: int | None = None
+    email: str | None = None

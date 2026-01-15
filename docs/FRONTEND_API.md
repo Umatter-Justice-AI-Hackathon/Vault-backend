@@ -485,7 +485,7 @@ const API_BASE = 'http://localhost:8000/api/v1';
 
 export const sendMessage = async (message: string, sessionId?: number) => {
   const token = localStorage.getItem('authToken');
-  
+
   const response = await fetch(`${API_BASE}/chat`, {
     method: 'POST',
     headers: {

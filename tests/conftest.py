@@ -9,8 +9,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.main import app
 from app.database import Base, get_db
+from app.main import app
 
 # Use in-memory SQLite for tests
 SQLALCHEMY_TEST_DATABASE_URL = "sqlite:///./test.db"
@@ -26,7 +26,7 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 def db_session():
     """
     Create a fresh database for each test.
-    
+
     Yields:
         Session: SQLAlchemy session for testing
     """
@@ -43,13 +43,14 @@ def db_session():
 def client(db_session):
     """
     Create a test client with overridden database dependency.
-    
+
     Args:
         db_session: Database session fixture
-        
+
     Yields:
         TestClient: FastAPI test client
     """
+
     def override_get_db():
         try:
             yield db_session
@@ -57,10 +58,10 @@ def client(db_session):
             db_session.close()
 
     app.dependency_overrides[get_db] = override_get_db
-    
+
     with TestClient(app) as test_client:
         yield test_client
-    
+
     app.dependency_overrides.clear()
 
 

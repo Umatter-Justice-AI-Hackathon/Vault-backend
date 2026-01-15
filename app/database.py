@@ -5,13 +5,16 @@ Sets up SQLAlchemy engine, session factory, and base model class.
 """
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 from app.config import settings
 
 # Prepare connection args for Render compatibility
 connect_args = {}
-if settings.database_url.startswith("postgresql://") and "localhost" not in settings.database_url:
+if (
+    settings.database_url.startswith("postgresql://")
+    and "localhost" not in settings.database_url
+):
     # Production/Render: Use SSL
     connect_args = {"sslmode": "require"}
 
@@ -32,16 +35,17 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Base class for all models
 class Base(DeclarativeBase):
     """Base class for all database models."""
+
     pass
 
 
 def get_db():
     """
     Dependency for FastAPI routes to get a database session.
-    
+
     Yields:
         Session: SQLAlchemy database session
-        
+
     Example:
         @app.get("/users")
         def get_users(db: Session = Depends(get_db)):

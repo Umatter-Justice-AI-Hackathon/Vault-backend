@@ -16,7 +16,7 @@ graph TB
     E[React Frontend] <--> A
     A <--> G[Session Scoring]
     A <--> H[Action Plan Generator]
-    
+
     style A fill:#009688
     style E fill:#FF6B6B
     style B fill:#000000,color:#fff

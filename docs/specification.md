@@ -10,7 +10,7 @@
     - It should remind the user it is a bot if it gets too personal.
     - It should be able to indentify times to intervene with breathing excercises, grounding techniques, or other coping mechanisms.
 - We need a speech-to-text interface to convert user speech into text input for the chatbot.
-- We need something that summarises the session score to a single score. 
+- We need something that summarises the session score to a single score.
     - This score will be plotted in a time series.
 - There should be a "Action" plan generator that creates a list of actionable steps for the user to take based on their conversations with the chatbot.
     - This should include things like seek support from manager
@@ -40,7 +40,7 @@ It will also send the session score and time to the central database in an anony
 
 ## Interacting with the front end
 
-ReactJS front end will communicate with the FastAPI backend via RESTful API endpoints. The backend will expose endpoints for user authentication, session management, and chatbot interactions. There will be a browser database to store user data locally. 
+ReactJS front end will communicate with the FastAPI backend via RESTful API endpoints. The backend will expose endpoints for user authentication, session management, and chatbot interactions. There will be a browser database to store user data locally.
 
 The key features of the front end will include:
 

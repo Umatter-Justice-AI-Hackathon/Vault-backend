@@ -4,7 +4,7 @@ Configuration management using Pydantic Settings.
 Loads environment variables and provides type-safe access to configuration values.
 """
 
-from typing import Optional
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -14,18 +14,18 @@ class Settings(BaseSettings):
     # Database
     # Render provides DATABASE_URL with proper connection string
     database_url: str = "postgresql://localhost:5432/umatter"
-    
+
     # For Render compatibility: override connection args if needed
     database_pool_size: int = 5
     database_max_overflow: int = 10
 
     # OAuth Providers
-    google_client_id: Optional[str] = None
-    google_client_secret: Optional[str] = None
-    github_client_id: Optional[str] = None
-    github_client_secret: Optional[str] = None
-    microsoft_client_id: Optional[str] = None
-    microsoft_client_secret: Optional[str] = None
+    google_client_id: str | None = None
+    google_client_secret: str | None = None
+    github_client_id: str | None = None
+    github_client_secret: str | None = None
+    microsoft_client_id: str | None = None
+    microsoft_client_secret: str | None = None
 
     # Security
     secret_key: str = "change-this-in-production"
@@ -39,21 +39,21 @@ class Settings(BaseSettings):
 
     # LLM Provider: "ollama", "groq", "huggingface", "openai", or "anthropic"
     llm_provider: str = "ollama"
-    
+
     # Groq Configuration (FREE & FAST - recommended for production)
-    groq_api_key: Optional[str] = None
+    groq_api_key: str | None = None
     groq_model: str = "llama-3.1-70b-versatile"
-    
+
     # Hugging Face Configuration (FREE alternative)
-    huggingface_api_key: Optional[str] = None
+    huggingface_api_key: str | None = None
     huggingface_model: str = "meta-llama/Llama-3.1-70B-Instruct"
-    
+
     # OpenAI Configuration (paid but reliable)
-    openai_api_key: Optional[str] = None
+    openai_api_key: str | None = None
     openai_model: str = "gpt-4o-mini"
-    
+
     # Anthropic Configuration (paid alternative)
-    anthropic_api_key: Optional[str] = None
+    anthropic_api_key: str | None = None
     anthropic_model: str = "claude-3-5-sonnet-20241022"
 
     # Application
