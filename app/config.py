@@ -32,10 +32,29 @@ class Settings(BaseSettings):
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
 
-    # Ollama Configuration
+    # Ollama Configuration (local dev)
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "llama3.1:8b"
     ollama_timeout: int = 120  # seconds
+
+    # LLM Provider: "ollama", "groq", "huggingface", "openai", or "anthropic"
+    llm_provider: str = "ollama"
+    
+    # Groq Configuration (FREE & FAST - recommended for production)
+    groq_api_key: Optional[str] = None
+    groq_model: str = "llama-3.1-70b-versatile"
+    
+    # Hugging Face Configuration (FREE alternative)
+    huggingface_api_key: Optional[str] = None
+    huggingface_model: str = "meta-llama/Llama-3.1-70B-Instruct"
+    
+    # OpenAI Configuration (paid but reliable)
+    openai_api_key: Optional[str] = None
+    openai_model: str = "gpt-4o-mini"
+    
+    # Anthropic Configuration (paid alternative)
+    anthropic_api_key: Optional[str] = None
+    anthropic_model: str = "claude-3-5-sonnet-20241022"
 
     # Application
     frontend_url: str = "http://localhost:3000"

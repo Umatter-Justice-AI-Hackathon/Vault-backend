@@ -83,28 +83,53 @@ ollama pull llama3.1:8b
 
 ## Docker Development
 
+### Quick Start with Docker Compose (Recommended)
+
+```bash
+# Start all services (app + database)
+# Note: Ollama must still run on host machine
+docker-compose up
+
+# Start in background
+docker-compose up -d
+
+# View logs
+docker-compose logs -f app
+
+# Stop all services
+docker-compose down
+
+# Stop and remove volumes (fresh start)
+docker-compose down -v
+```
+
+The API will be available at:
+- http://localhost:8000
+- Docs: http://localhost:8000/api/v1/docs
+
+**Note:** Ollama runs on your host machine, not in Docker. Start it with `ollama serve` before running docker-compose.
+
 ### Build Docker Image Locally
 
 ```bash
 # Build the image
 docker build -t umatter-backend:local .
 
-# Run the container
+# Run the container (requires PostgreSQL and Ollama on host)
 docker run -p 8000:8000 \
   -e DATABASE_URL="postgresql://user:password@host.docker.internal:5432/umatter" \
   -e OLLAMA_BASE_URL="http://host.docker.internal:11434" \
   umatter-backend:local
 ```
 
-### Using Docker Compose (Coming Soon)
+### Development with Docker
 
-```bash
-# Start all services (app, database, ollama)
-docker-compose up
-
-# Stop all services
-docker-compose down
-```
+When using docker-compose:
+- Code changes in `app/` and `tests/` are automatically reflected (volume mounts)
+- Database data persists in a Docker volume
+- Run migrations: `docker-compose exec app alembic upgrade head`
+- Run tests: `docker-compose exec app pytest`
+- Access database: `docker-compose exec db psql -U umatter`
 
 ## Testing
 
