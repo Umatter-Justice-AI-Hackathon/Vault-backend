@@ -70,7 +70,11 @@ ollama pull llama3.1:8b
 
 ```bash
 # Development mode with auto-reload
-uvicorn app.main:app --reload
+.venv/bin/uvicorn app.main:app --reload
+
+# Or if you've activated the virtual environment:
+# source .venv/bin/activate
+# uvicorn app.main:app --reload
 
 # The API will be available at:
 # - http://localhost:8000
