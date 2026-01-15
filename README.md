@@ -10,13 +10,12 @@ A trauma-aware wellbeing chatbot API that empowers users to offload, reflect, an
 
 ```mermaid
 graph TB
-    A[FastAPI Backend] --> B[Ollama Models]
-    A --> C[RxDB Local Storage]
+    A[FastAPI Backend] <--> B[Ollama Models]
+    A <--> C[RxDB Local Storage]
     A --> D[Aggregated Analytics DB]
-    E[React Frontend] --> A
-    F[Speech-to-Text] --> A
-    A --> G[Session Scoring]
-    A --> H[Action Plan Generator]
+    E[React Frontend] <--> A
+    A <--> G[Session Scoring]
+    A <--> H[Action Plan Generator]
     
     style A fill:#009688
     style E fill:#FF6B6B
