@@ -64,3 +64,35 @@ class WellnessTrendResponse(BaseModel):
     trend: str  # "improving", "declining", "stable"
     average_score: float
     period_days: int
+
+
+# ============================================================================
+# LLM / Chat Schemas
+# ============================================================================
+
+class ChatRequest(BaseModel):
+    """Schema for chat requests."""
+    message: str = Field(..., min_length=1, max_length=2000, description="User's message")
+
+
+class ChatResponse(BaseModel):
+    """Schema for chat responses."""
+    message: str
+    model_used: str
+
+
+class WellnessInsightRequest(BaseModel):
+    """Schema for requesting wellness insights."""
+    userid: int
+    days: Optional[int] = Field(7, ge=1, le=90, description="Number of days to analyze")
+
+
+class WellnessInsightResponse(BaseModel):
+    """Schema for wellness insight responses."""
+    userid: int
+    period_days: int
+    average_score: float
+    trend: str
+    total_entries: int
+    insight: str
+    model_used: str

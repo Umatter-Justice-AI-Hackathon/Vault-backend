@@ -54,10 +54,16 @@ async def health_check():
 
 
 # Import and include routers
-from app.api import wellness
+from app.api import wellness, llm
 
 app.include_router(
     wellness.router,
     prefix=f"{settings.api_prefix}/wellness",
     tags=["wellness"]
+)
+
+app.include_router(
+    llm.router,
+    prefix=f"{settings.api_prefix}/llm",
+    tags=["llm", "ai"]
 )

@@ -30,6 +30,9 @@ htmlcov/
 *.db
 *.sqlite3
 
+# Scripts with sensitive data
+add_data_directly.py
+
 # Logs
 *.log
 
@@ -42,3 +45,5 @@ poetry.lock
 
 # Alembic - keep migration files but ignore .pyc
 alembic/versions/__pycache__/
+
+
