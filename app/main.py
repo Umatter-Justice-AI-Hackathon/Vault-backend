@@ -53,9 +53,16 @@ async def health_check():
 
 
 # Import and include routers
-# TODO: Add routers as they are created
-# from app.api import auth, chat, sessions, analytics
-# app.include_router(auth.router, prefix=f"{settings.api_prefix}/auth", tags=["auth"])
-# app.include_router(chat.router, prefix=f"{settings.api_prefix}/chat", tags=["chat"])
-# app.include_router(sessions.router, prefix=f"{settings.api_prefix}/sessions", tags=["sessions"])
-# app.include_router(analytics.router, prefix=f"{settings.api_prefix}/analytics", tags=["analytics"])
+from app.api import wellness, llm
+
+app.include_router(
+    wellness.router,
+    prefix=f"{settings.api_prefix}/wellness",
+    tags=["wellness"]
+)
+
+app.include_router(
+    llm.router,
+    prefix=f"{settings.api_prefix}/llm",
+    tags=["llm", "ai"]
+)
